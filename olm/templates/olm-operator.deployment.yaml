@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: olm-operator
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.olm_namespace }}
   labels:
     app: olm-operator
 spec:
@@ -17,7 +17,7 @@ spec:
       labels:
         app: olm-operator
     spec:
-      serviceAccountName: olm-operator-serviceaccount
+      serviceAccountName: {{ template "olmServiceAccount" . }}
       containers:
         - name: olm-operator
           command:

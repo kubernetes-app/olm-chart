@@ -3,7 +3,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   name: packageserver
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.olm_namespace }}
   labels:
     olm.version: {{ .Values.olmVersion }}
 spec:
@@ -32,7 +32,7 @@ spec:
     strategy: deployment
     spec:
       clusterPermissions:
-      - serviceAccountName: olm-operator-serviceaccount
+      - serviceAccountName: {{ template "olmServiceAccount" . }}
         rules:
         - apiGroups:
             - authorization.k8s.io

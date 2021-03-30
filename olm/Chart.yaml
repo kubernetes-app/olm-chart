@@ -1,0 +1,15 @@
+apiVersion: v1
+description: A Helm chart for Operator Lifycycle Manager
+maintainers:
+  - name: Xin Li
+    email: lixin8611@gmail.com
+name: olm
+homepage: https://github.com/kubernetes-app/olm-deploy
+sources:
+  - https://github.com/kubernetes-app/olm-deploy
+version: 1.0.0
+appVersion: "0.17.0"
+icon: https://raw.githubusercontent.com/kubernetes-app/olm-deploy/master/icons/logo-olm.svg
+keyWords:
+  - operator
+  - olm

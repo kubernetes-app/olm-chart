@@ -1,4 +1,7 @@
-
+CHART_NAME ?= olm
+CHART_VERSION ?= 1.0.0
+# TARGET_IMAGE_REPO ?= ccr.ccs.tencentyun.com/tke-market
+TARGET_IMAGE_REPO ?= blackholex
 ##@ General
 
 help: ## Display this help.
@@ -8,14 +11,41 @@ help: ## Display this help.
 
 .PHONY: build-chart
 build-chart: ## Build helm chart package
-	helm package olm-chart
+	helm package olm
 
 .PHONY: lint-chart
 lint-chart: ## Verify chart lint error
-	helm lint olm-chart-0.0.1.tgz
+	helm lint $(CHART_NAME)-$(CHART_VERSION).tgz
 
 ##@ Development
 
 .PHONY: install-chart
-install-chart: ## Install chart for dev test
-	helm install olm-chart olm-chart-0.0.1.tgz -n kube-system 
+install-chart: build-chart lint-chart ## Install chart for dev test
+	helm install $(CHART_NAME) $(CHART_NAME)-$(CHART_VERSION).tgz -n kube-system --debug
+
+.PHONY: check-installed
+check-installed: ## Check installed chart
+	helm list -n kube-system
+	kubectl get deploy,po -n operator-lifecycle-manager
+	kubectl get csv -n operator-lifecycle-manager
+	kubectl get og -n operator-lifecycle-manager
+	kubectl get og -n operators
+
+.PHONY: uninstall-chart
+uninstall-chart: ## Uninstall chart for dev test
+	helm uninstall $(CHART_NAME) -n kube-system --debug
+
+
+##@ Release
+
+.PHONY: push-images
+push-images: ## Push olm related images to repo
+	docker pull quay.io/operator-framework/olm@sha256:de396b540b82219812061d0d753440d5655250c621c753ed1dc67d6154741607
+	docker pull quay.io/operator-framework/configmap-operator-registry:latest
+	docker pull bitnami/kubectl:latest
+	docker tag quay.io/operator-framework/olm@sha256:de396b540b82219812061d0d753440d5655250c621c753ed1dc67d6154741607 ${TARGET_IMAGE_REPO}/olm:0.17.0
+	docker tag quay.io/operator-framework/configmap-operator-registry:latest ${TARGET_IMAGE_REPO}/configmap-operator-registry:0.17.0
+	docker tag bitnami/kubectl:latest ${TARGET_IMAGE_REPO}/kubectl:0.17.0
+	docker push ${TARGET_IMAGE_REPO}/olm:0.17.0
+	docker push ${TARGET_IMAGE_REPO}/configmap-operator-registry:0.17.0
+	docker push ${TARGET_IMAGE_REPO}/kubectl:0.17.0

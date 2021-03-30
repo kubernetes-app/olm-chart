@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalog-operator
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.olm_namespace }}
   labels:
     app: catalog-operator
 spec:
@@ -17,14 +17,14 @@ spec:
       labels:
         app: catalog-operator
     spec:
-      serviceAccountName: olm-operator-serviceaccount
+      serviceAccountName: {{ template "olmServiceAccount" . }}
       containers:
         - name: catalog-operator
           command:
           - /bin/catalog
           args:
           - '-namespace'
-          - {{ .Values.catalog_namespace }}
+          - {{ .Values.olm_namespace }}
           {{- if .Values.debug }}
           - '-debug'
           {{- end }}

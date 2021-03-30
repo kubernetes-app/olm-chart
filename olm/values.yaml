@@ -1,6 +1,5 @@
-rbacApiVersion: rbac.authorization.k8s.io
-namespace: operator-lifecycle-manager
-catalog_namespace: operator-lifecycle-manager
+rbacGroup: rbac.authorization.k8s.io
+olm_namespace: operator-lifecycle-manager
 operator_namespace: operators
 minKubeVersion: 1.11.0
 olmVersion: 0.17.0
@@ -8,7 +7,7 @@ debug: false
 olm:
   replicaCount: 1
   image:
-    ref: quay.io/operator-framework/olm@sha256:de396b540b82219812061d0d753440d5655250c621c753ed1dc67d6154741607
+    ref: blackholex/olm:0.17.0
     pullPolicy: IfNotPresent
   service:
     internalPort: 8080
@@ -21,9 +20,9 @@ olm:
 
 catalog:
   replicaCount: 1
-  commandArgs: -configmapServerImage=quay.io/operator-framework/configmap-operator-registry:latest
+  commandArgs: -configmapServerImage=blackholex/configmap-operator-registry:0.17.0
   image:
-    ref: quay.io/operator-framework/olm@sha256:de396b540b82219812061d0d753440d5655250c621c753ed1dc67d6154741607
+    ref: blackholex/olm:0.17.0
     pullPolicy: IfNotPresent
   service:
     internalPort: 8080
@@ -35,9 +34,9 @@ catalog:
      memory: 80Mi
 
 package:
-  replicaCount: 2
+  replicaCount: 1
   image:
-    ref: quay.io/operator-framework/olm@sha256:de396b540b82219812061d0d753440d5655250c621c753ed1dc67d6154741607
+    ref: blackholex/olm:0.17.0
     pullPolicy: IfNotPresent
   service:
     internalPort: 5443
@@ -47,3 +46,11 @@ package:
     requests:
      cpu: 10m
      memory: 50Mi
+
+hook:
+  serviceAccount:
+    create: true
+    name:
+  image:
+    ref: blackholex/kubectl:0.17.0
+    pullPolicy: IfNotPresent
