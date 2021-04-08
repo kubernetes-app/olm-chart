@@ -1,0 +1,5 @@
+chart: olm/*
+
+crd: olm/crds/*
+
+template: olm/templates/**/*

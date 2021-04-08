@@ -3,11 +3,11 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Operator Lifecycle Manager Chart](#operator-lifecycle-manager-chart)
-  - [OLM 组件定义](#olm-组件定义)
-  - [安装 OLM](#安装-olm)
-  - [卸载 OLM](#卸载-olm)
-  - [配置及默认值](#配置及默认值)
-  - [部署在集群内Kubernetes对象](#部署在集群内kubernetes对象)
+  - [OLM 组件定义](#olm-%E7%BB%84%E4%BB%B6%E5%AE%9A%E4%B9%89)
+  - [安装 OLM](#%E5%AE%89%E8%A3%85-olm)
+  - [卸载 OLM](#%E5%8D%B8%E8%BD%BD-olm)
+  - [配置及默认值](#%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%BB%98%E8%AE%A4%E5%80%BC)
+  - [部署在集群内Kubernetes对象](#%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%9B%86%E7%BE%A4%E5%86%85kubernetes%E5%AF%B9%E8%B1%A1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
