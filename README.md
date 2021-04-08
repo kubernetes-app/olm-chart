@@ -8,6 +8,8 @@
 
 # Deploy Operator Lifecycle Manager
 
+Package OLM operator as a chart
+
 Deploy Operator Lifecycle Manager on kubernetes cluster
 
 ```bash
